@@ -31,6 +31,21 @@ if __name__ == "__main__":
         StructField("Name", StringType(), True)
                        ])
     my_test = spark.read.csv("./data.csv", header=True, schema=schema_test)
+    one = my_test[my_test.columns[1:]]
+    # 创建全局表格
+    my_test.createGlobalTempView("people")
+    # 读取spark的训练格式
+
+    # $example on$
+    # Load the data stored in LIBSVM format as a DataFrame.
+    demo_data_libsvm = spark.read.format("libsvm").load("data/mllib/sample_libsvm_data.txt")
+
+
+
+
+
+
+
     # my_data = spark.createDataFrame(data, schema)
     # spark.stop()
     print("ok")
