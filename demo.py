@@ -12,14 +12,16 @@ import os
 from pyspark.sql import SQLContext
 from pyspark.sql import SparkSession 
 from pyspark.sql.types import *
+from time import time
+
 
 if __name__ == "__main__":
     print("======")
-    #配置环境
+    # 配置环境
     spark = SparkSession.builder.appName("test").getOrCreate()
     print("ok")
 
-    #读取文件
+    # 读取文件
     # #文件表头
     schema_test = StructType([
         StructField("Date", StringType(), True),
@@ -34,6 +36,12 @@ if __name__ == "__main__":
     one = my_test[my_test.columns[1:]]
     # 创建全局表格
     my_test.createGlobalTempView("people")
+
+    start = time()
+    two_test = spark.sql("select * from global_temp.people")
+    print("took %.2f seconds for" % ((time()-start )))
+
+
     # 读取spark的训练格式
 
     # $example on$
