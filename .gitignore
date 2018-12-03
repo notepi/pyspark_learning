@@ -1,2 +1,5 @@
-.idea/*
-.D*
+.idea/misc.xml
+.idea/spark.iml
+.idea/workspace.xml
+.DS_Store
+.idea/encodings.xmls
