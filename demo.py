@@ -33,7 +33,7 @@ if __name__ == "__main__":
         StructField("Name", StringType(), True)
                        ])
     my_test = spark.read.csv("./data.csv", header=True, schema=schema_test)
-    one = my_test[my_test.columns[1:]]
+    one = my_test[my_test.columns[1:-1]]
     # 创建全局表格
     my_test.createGlobalTempView("people")
 
@@ -44,8 +44,8 @@ if __name__ == "__main__":
     # 将数据转换成标签数据
     def parsePoint(line):
         return (line[-1], Vectors.dense(line[:-1]))
-    # # parsedData = my_test.map(parsePoint)
-    parsedData = my_test.rdd.map(parsePoint)
+
+    parsedData = one.rdd.map(parsePoint)
     df = spark.createDataFrame(parsedData, ["label", "features"])
     hasattr(parsedData, "toDF")
     # df = spark.createDataFrame(parsedData, ["label", "features"])
